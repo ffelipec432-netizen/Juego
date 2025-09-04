@@ -3,158 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <title>Rompecabezas Educativo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #2a2a4a);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-
-    #score-board {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin: 10px;
-      padding: 10px 20px;
-      background: #00ffcc;
-      color: #111;
-      border-radius: 12px;
-      box-shadow: 0 0 15px #00ffcc;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 10px #00ffcc; }
-      50% { box-shadow: 0 0 25px #00ffcc; }
-      100% { box-shadow: 0 0 10px #00ffcc; }
-    }
-
-    #puzzle-board {
-      position: relative;
-      width: 600px;
-      height: 600px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-      background: url('https://www.uautonoma.cl/content/uploads/2023/07/maltrato-infantil-1.jpg') no-repeat center;
-      background-size: cover;
-      border: 4px solid #00ffcc;
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .tile {
-      background: rgba(0,0,0,0.85);
-      border: 1px solid #333;
-      cursor: pointer;
-      transition: opacity 0.5s;
-    }
-
-    .tile.revealed {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    #quiz-container {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: linear-gradient(135deg, #4a00e0, #8e2de2);
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 0 25px #8e2de2;
-      max-width: 400px;
-      text-align: center;
-      z-index: 1000;
-    }
-
-    #quiz-container h2 {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-    }
-
-    .option {
-      display: block;
-      margin: 10px auto;
-      padding: 12px 20px;
-      background: #00ffcc;
-      color: #111;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: bold;
-      transition: transform 0.2s, background 0.3s;
-    }
-
-    .option:hover {
-      transform: scale(1.05);
-      background: #00ffaa;
-    }
-
-    #final-panel {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      z-index: 2000;
-      color: #fff;
-      text-align: center;
-      padding-top: 50px;
-    }
-
-    #final-panel h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      color: #00ffcc;
-      text-shadow: 0 0 15px #00ffcc;
-      animation: zoomIn 1s ease;
-    }
-
-    @keyframes zoomIn {
-      from { transform: scale(0.5); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    #final-panel img {
-      width: 400px;
-      border-radius: 16px;
-      margin: 20px 0;
-    }
-
-    #download-btn {
-      padding: 15px 25px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      background: #00ffcc;
-      color: #111;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 0 15px #00ffcc;
-      transition: background 0.3s, transform 0.2s;
-    }
-
-    #download-btn:hover {
-      background: #00ffaa;
-      transform: scale(1.05);
-    }
+    body { margin: 0; font-family: Arial, sans-serif; background: linear-gradient(135deg, #1e1e2f, #2a2a4a); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 100vh; }
+    header { margin: 20px 0; text-align: center; }
+    header h1 { font-size: 2rem; color: #00ffcc; text-shadow: 0 0 15px #00ffcc; margin: 0; }
+    header p { color: #ddd; margin: 6px 0 0 0; }
+    #main-container { display: flex; align-items: center; justify-content: center; gap: 20px; width: 100%; max-width: 1200px; padding: 10px; }
+    .side-text { width: 180px; font-size: 1rem; background: rgba(255,255,255,0.06); padding: 15px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.3); color: #fff; min-height: 120px; display: flex; align-items: center; justify-content: center; text-align: center; transition: opacity 0.6s; }
+    #score-board { font-size: 1.2rem; font-weight: bold; margin: 8px; padding: 8px 16px; background: #00ffcc; color: #111; border-radius: 12px; box-shadow: 0 0 10px #00ffcc; animation: pulse 1.8s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 8px #00ffcc; } 50% { box-shadow: 0 0 20px #00ffcc; } 100% { box-shadow: 0 0 8px #00ffcc; } }
+    #puzzle-board { position: relative; width: 560px; height: 560px; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); background: #222 center/cover no-repeat; border-radius: 12px; overflow: hidden; border: 4px solid rgba(0,255,204,0.16); }
+    .tile { background: rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.04); cursor: pointer; transition: opacity 0.5s; }
+    .tile.revealed { opacity: 0; pointer-events: none; }
+    #quiz-container { display: none; position: fixed; top:50%; left:50%; transform:translate(-50%,-50%); background: linear-gradient(135deg,#4a00e0,#8e2de2); padding:20px; border-radius:12px; z-index:1200; width:320px; text-align:center; }
+    .option { display:block; margin:10px auto; padding:10px 14px; border-radius:10px; border:none; background:#00ffcc; color:#111; font-weight:bold; cursor:pointer; }
+    #final-panel { display:none; position:fixed; inset:0; background: rgba(0,0,0,0.88); z-index:1400; color:#fff; text-align:center; padding-top:40px; }
+    #final-panel .card { background: linear-gradient(180deg,#0f1724,#1b2336); margin: 0 auto; width:90%; max-width:720px; border-radius:14px; padding:20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+    #final-panel h1 { color:#00ffcc; text-shadow:0 0 12px #00ffcc; }
+    #final-panel img { width:320px; border-radius:10px; margin-top:12px; }
+    #download-btn { margin-top:14px; padding:12px 18px; border-radius:10px; border:none; background:#00ffcc; color:#111; font-weight:bold; cursor:pointer; }
+    #name-modal { position:fixed; inset:0; background: rgba(0,0,0,0.9); display:flex; align-items:center; justify-content:center; z-index:2000; }
+    #name-box { background:#fff; color:#111; padding:18px; border-radius:10px; width:320px; text-align:center; }
+    #name-box input { width:100%; padding:10px; margin-top:8px; border-radius:8px; border:1px solid #ccc; box-sizing: border-box; font-size:16px; }
+    #name-box button { margin-top:12px; padding:10px 14px; background:#00ffcc; border:none; border-radius:8px; cursor:pointer; font-weight:bold; }
+    @media (max-width:800px){ #puzzle-board{ width:92vw; height:92vw; } .side-text{ display:none; } header h1{ font-size:1.6rem; } }
   </style>
 </head>
 <body>
 
+<header>
+  <h1>Rompecabezas Educativo</h1>
+  <p>Aprende jugando y demuestra tu compromiso</p>
+</header>
+
 <div id="score-board">Puntaje: 0 | Tiempo: 03:00</div>
-<div id="puzzle-board"></div>
+
+<div id="main-container">
+  <div id="left-msg" class="side-text">Tu voz tiene poder</div>
+  <div id="puzzle-board"></div>
+  <div id="right-msg" class="side-text">No guardes silencio</div>
+</div>
 
 <div id="quiz-container">
   <h2 id="quiz-question"></h2>
@@ -162,58 +51,40 @@
 </div>
 
 <div id="final-panel">
-  <h1 id="final-score"></h1>
-  <p id="final-message"></p>
-  <img id="final-image" src="https://www.uautonoma.cl/content/uploads/2023/07/maltrato-infantil-1.jpg" alt="Imagen final">
-  <br>
-  <button id="download-btn">Descargar Certificado</button>
+  <div class="card">
+    <h1 id="final-score">Tu puntaje: 0/1000</h1>
+    <p id="final-message">Mensaje</p>
+    <img id="final-image" src="https://www.uautonoma.cl/content/uploads/2023/07/maltrato-infantil-1.jpg" alt="Imagen final">
+    <div>
+      <button id="download-btn">Descargar Certificado</button>
+    </div>
+  </div>
+</div>
+
+<!-- name modal -->
+<div id="name-modal">
+  <div id="name-box">
+    <h2>Ingresa tu nombre</h2>
+    <input id="player-name" placeholder="Tu nombre..." />
+    <button id="start-btn">Comenzar</button>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-  const board = document.getElementById('puzzle-board');
-  const scoreBoard = document.getElementById('score-board');
-  const quizContainer = document.getElementById('quiz-container');
-  const quizQuestion = document.getElementById('quiz-question');
-  const optionsDiv = document.getElementById('options');
-  const finalPanel = document.getElementById('final-panel');
-  const finalScore = document.getElementById('final-score');
-  const finalMessage = document.getElementById('final-message');
-  const downloadBtn = document.getElementById('download-btn');
-
+  // --- estado global ---
+  let playerName = '';
   let score = 0;
   let timeLeft = 180;
   let gameTimer = null;
-
-  function updateHUD() {
-    const mm = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-    const ss = String(timeLeft % 60).padStart(2, '0');
-    scoreBoard.textContent = `Puntaje: ${score} | Tiempo: ${mm}:${ss}`;
-  }
-
-  function startGameTimer() {
-    updateHUD();
-    gameTimer = setInterval(() => {
-      timeLeft--;
-      updateHUD();
-      if (timeLeft <= 0) {
-        clearInterval(gameTimer);
-        endGame(true);
-      }
-    }, 1000);
-  }
-
+  let gameStart = null;
   let revealedTiles = 0;
-  function createBoard() {
-    for (let i = 0; i < 16; i++) {
-      const tile = document.createElement('div');
-      tile.classList.add('tile');
-      tile.dataset.index = i;
-      tile.addEventListener('click', () => startQuiz(tile));
-      board.appendChild(tile);
-    }
-  }
+  let availableQuestions = [];
 
+  // --- DOM refs (will be assigned after elements exist) ---
+  let board, scoreBoard, quizContainer, quizQuestion, optionsDiv, finalPanel, finalScore, finalMessage, finalImage, downloadBtn, nameModal, playerNameInput, startBtn, leftMsg, rightMsg;
+
+  // --- preguntas ---
   const questions = [
     {q: "¿Qué debes hacer si alguien te pide guardar un secreto que te incomoda?", a: "Contarlo a un adulto de confianza", o: ["Guardarlo", "Contarlo a un adulto de confianza", "Ignorarlo"]},
     {q: "Si un desconocido te ofrece regalos a cambio de favores, ¿qué haces?", a: "Rechazar y contarlo", o: ["Aceptarlo", "Rechazar y contarlo", "Guardarlo en secreto"]},
@@ -233,83 +104,170 @@
     {q: "Si alguien te pide fotos íntimas por internet, ¿qué debes hacer?", a: "No enviar y avisar a un adulto", o: ["Enviar", "No enviar y avisar a un adulto", "Ignorar y seguir"]}
   ];
 
-  let availableQuestions = [...questions];
+  // --- funciones (declaradas como funciones para que queden hoisted) ---
+  function initDOMRefs(){
+    board = document.getElementById('puzzle-board');
+    scoreBoard = document.getElementById('score-board');
+    quizContainer = document.getElementById('quiz-container');
+    quizQuestion = document.getElementById('quiz-question');
+    optionsDiv = document.getElementById('options');
+    finalPanel = document.getElementById('final-panel');
+    finalScore = document.getElementById('final-score');
+    finalMessage = document.getElementById('final-message');
+    finalImage = document.getElementById('final-image');
+    downloadBtn = document.getElementById('download-btn');
+    nameModal = document.getElementById('name-modal');
+    playerNameInput = document.getElementById('player-name');
+    startBtn = document.getElementById('start-btn');
+    leftMsg = document.getElementById('left-msg');
+    rightMsg = document.getElementById('right-msg');
+  }
 
-  let startTime = null;
-  function startQuiz(tile) {
-    if (quizContainer.style.display === 'block' || tile.classList.contains('revealed')) return;
-    if (availableQuestions.length === 0) return;
+  function updateHUD(){
+    const mm = String(Math.floor(timeLeft/60)).padStart(2,'0');
+    const ss = String(timeLeft%60).padStart(2,'0');
+    if(scoreBoard) scoreBoard.textContent = `Puntaje: ${score} | Tiempo: ${mm}:${ss}`;
+  }
 
-    const qIndex = Math.floor(Math.random() * availableQuestions.length);
-    const q = availableQuestions.splice(qIndex, 1)[0];
+  function startGameTimer(){
+    gameStart = Date.now();
+    updateHUD();
+    if(gameTimer) clearInterval(gameTimer);
+    gameTimer = setInterval(()=>{
+      timeLeft--;
+      updateHUD();
+      if(timeLeft<=0){ clearInterval(gameTimer); endGame(true); }
+    },1000);
+  }
 
+  function preloadImage(){
+    const img = new Image();
+    img.onload = ()=>{ if(board) board.style.backgroundImage = `url('${img.src}')`; if(finalImage) finalImage.src = img.src; };
+    img.onerror = ()=>{ console.warn('Error cargando imagen'); };
+    img.src = 'https://www.uautonoma.cl/content/uploads/2023/07/maltrato-infantil-1.jpg';
+  }
+
+  function createBoard(){
+    if(!board) return;
+    board.innerHTML='';
+    for(let i=0;i<16;i++){
+      const tile = document.createElement('div');
+      tile.className='tile';
+      tile.dataset.index = i;
+      tile.addEventListener('click', ()=> startQuiz(tile));
+      board.appendChild(tile);
+    }
+  }
+
+  function startQuiz(tile){
+    if(!quizContainer || quizContainer.style.display==='block' || tile.classList.contains('revealed')) return;
+    if(availableQuestions.length===0) return;
+    const idx = Math.floor(Math.random()*availableQuestions.length);
+    const q = availableQuestions.splice(idx,1)[0];
     quizQuestion.textContent = q.q;
-    optionsDiv.innerHTML = '';
-    q.o.forEach(opt => {
+    optionsDiv.innerHTML='';
+    q.o.forEach(opt=>{
       const btn = document.createElement('button');
+      btn.className='option';
       btn.textContent = opt;
-      btn.classList.add('option');
-      btn.onclick = () => checkAnswer(opt, q.a, tile);
+      btn.addEventListener('click', ()=> checkAnswer(opt,q.a,tile));
       optionsDiv.appendChild(btn);
     });
-
-    quizContainer.style.display = 'block';
-    startTime = new Date();
+    quizContainer.style.display='block';
+    questionStart = Date.now();
   }
 
-  function checkAnswer(selected, correct, tile) {
-    const endTime = new Date();
-    const timeTaken = (endTime - startTime) / 1000;
-
-    if (selected === correct) {
-      let points = 40;
-      if (timeTaken < 5) points += 20;
-      else if (timeTaken < 10) points += 15;
-      else if (timeTaken < 20) points += 10;
-      score += points;
-      updateHUD();
-
-      tile.classList.add('revealed');
-      revealedTiles++;
-
-      if (revealedTiles === 16) {
-        score += 40;
-        clearInterval(gameTimer);
-        endGame(false);
-      }
+  function checkAnswer(selected, correct, tile){
+    const timeTaken = (Date.now()-questionStart)/1000;
+    if(selected===correct){
+      let points=40;
+      if(timeTaken<5) points+=20;
+      else if(timeTaken<10) points+=15;
+      else if(timeTaken<20) points+=10;
+      score+=points; if(score>1000) score=1000; updateHUD();
+      tile.classList.add('revealed'); revealedTiles++;
+      if(revealedTiles===16){ score+=40; if(score>1000)score=1000; clearInterval(gameTimer); endGame(false); }
     }
-
-    quizContainer.style.display = 'none';
+    if(quizContainer) quizContainer.style.display='none';
   }
 
-  function endGame(byTime = false) {
-    let message = "";
-    if (byTime) {
-      message = "Se acabó el tiempo. ¡Buen intento!";
-    } else {
-      if (score >= 800) message = "¡Excelente compromiso!";
-      else if (score >= 500) message = "¡Muy bien, sigues aprendiendo y apoyando!";
-      else message = "¡Puedes mejorar, sigue intentándolo!";
-    }
+  function endGame(byTime=false){
+    if(gameTimer) clearInterval(gameTimer);
+    let msg='';
+    if(byTime) msg='Se acabó el tiempo. ¡Buen intento!';
+    else if(score>=800) msg='¡Excelente compromiso!';
+    else if(score>=500) msg='¡Muy bien, sigues aprendiendo y apoyando!';
+    else msg='¡Puedes mejorar, sigue intentándolo!';
 
-    finalScore.textContent = `Tu puntaje: ${score}/1000`;
-    finalMessage.textContent = message;
-    finalPanel.style.display = 'block';
+    const timePlayed = Math.floor((Date.now()-gameStart)/1000);
+    if(finalScore) finalScore.textContent = `${playerName || 'Jugador'}, tu puntaje: ${score}/1000`;
+    if(finalMessage) finalMessage.textContent = msg + ` Tiempo jugado: ${timePlayed}s`;
+    if(finalPanel) finalPanel.style.display='block';
   }
 
-  downloadBtn.addEventListener('click', () => {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text("Certificado de Compromiso", 60, 40);
-    doc.setFontSize(14);
-    doc.text("Me comprometo a no guardar silencio frente al abuso.", 20, 70);
-    doc.text(`Puntaje obtenido: ${score}/1000`, 20, 90);
-    doc.save("Compromiso.pdf");
+  function downloadCertificate(){
+    try{
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({orientation: 'landscape'});
+      doc.setFontSize(22); doc.setTextColor(0,128,128);
+      doc.text('CERTIFICADO DE COMPROMISO', 20, 20);
+      doc.setFontSize(14); doc.setTextColor(0,0,0);
+      doc.text(`Otorgado a: ${playerName || 'Jugador'}`, 20, 40);
+      doc.text(`Puntaje final: ${score}/1000`, 20, 56);
+      const played = Math.floor((Date.now()-gameStart)/1000);
+      doc.text(`Tiempo jugado: ${played} segundos`, 20, 72);
+      const level = score>=800? 'Excelente defensor' : (score>=500? 'Buen esfuerzo' : 'Sigue aprendiendo');
+      doc.text(`Nivel: ${level}`, 20, 88);
+      doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 20, 104);
+      doc.setFontSize(10); doc.text('Unidos por la protección de la niñez', 20, 120);
+      doc.save('certificado_compromiso.pdf');
+    }catch(e){ console.error('PDF error', e); alert('Error al generar certificado.'); }
+  }
+
+  function rotateMessages(){
+    if(!leftMsg || !rightMsg) return;
+    const msgs = ['Tu voz tiene poder','No guardes silencio','Habla con un adulto de confianza','Tu cuerpo merece respeto','Denuncia, no estás solo'];
+    let idx=0; leftMsg.style.opacity=0; rightMsg.style.opacity=0;
+    setInterval(()=>{
+      leftMsg.style.opacity=0; rightMsg.style.opacity=0;
+      setTimeout(()=>{
+        leftMsg.textContent = msgs[idx%msgs.length];
+        rightMsg.textContent = msgs[(idx+1)%msgs.length];
+        leftMsg.style.opacity=1; rightMsg.style.opacity=1; idx+=2;
+      },400);
+    },5000);
+  }
+
+  // --- start function (global, safe) ---
+  function startGameFromModal(){
+    // ensure DOM refs exist
+    initDOMRefs();
+
+    playerName = (playerNameInput && playerNameInput.value.trim()) || 'Jugador';
+    if(nameModal) nameModal.style.display='none';
+
+    // reset
+    score = 0; timeLeft = 180; revealedTiles = 0; availableQuestions = [...questions];
+    if(finalPanel) finalPanel.style.display='none';
+    updateHUD();
+
+    preloadImage();
+    createBoard();
+    startGameTimer();
+    rotateMessages();
+  }
+
+  // expose to window in case inline onclick is present
+  window.startGameFromModal = startGameFromModal;
+
+  // --- attach listeners after DOM loaded ---
+  document.addEventListener('DOMContentLoaded', ()=>{
+    initDOMRefs();
+    if(startBtn) startBtn.addEventListener('click', startGameFromModal);
+    if(downloadBtn) downloadBtn.addEventListener('click', downloadCertificate);
+    // prepare available questions but do not start
+    availableQuestions = [...questions];
   });
-
-  createBoard();
-  startGameTimer();
 </script>
 </body>
 </html>
